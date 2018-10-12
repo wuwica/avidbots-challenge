@@ -7,7 +7,6 @@ class TreeView extends React.Component {
 
     this.state = {
       collapsed: false,
-      lastActive: null,
     };
     this.handleClick = this.handleClick.bind(this);
     this.selectActive = this.selectActive.bind(this);
@@ -19,7 +18,8 @@ class TreeView extends React.Component {
     });
   }
 
-  selectActive(event){
+  selectActive(index, props){
+    //this.setState({active:index});
   }
 
   render() {
@@ -29,7 +29,7 @@ class TreeView extends React.Component {
       children,
       className = ""
     } = this.props;
-
+    
     let arrowClass = "tree-view-arrow";
     if (collapsed) {
       arrowClass = "tree-view-arrow-collapsed";
@@ -44,8 +44,8 @@ class TreeView extends React.Component {
 
     const label = (
       <div 
-          className={'label'}  
-          onClick={() => {this.props.onSelect(this.props.id) ; this.selectActive();}} >
+          className={this.props.isActive? 'label active' : 'label'}  
+          onClick={() => {this.props.onSelect({id: this.props.id,name: this.props.name})}} >
         {name}
       </div>
     );

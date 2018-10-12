@@ -5,16 +5,26 @@
 }
 
 .tree-view-arrow {
-    background: red;
-    margin: .25em;
-    width: 1em;
-    height: 1em;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    padding: .1em;
+    margin: .4em;
+    width: .4em;
+    height: .4em;
+    transform: rotate(+45deg);
+    transition:.2s;
+    cursor: pointer;
 }
 .tree-view-arrow-collapsed {
-    background: blue;
-    margin: .25em;
-    width: 1em;
-    height: 1em;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    padding: .1em;
+    margin: .4em;
+    width: .4em;
+    height: .4em;
+    transform: rotate(-45deg);
+    transition:.2s;
+    cursor: pointer;
 }
 .leaf-node{
     margin: .25em;
@@ -37,5 +47,15 @@
 }
 
 .label{
+    padding: 0 .25em;
     cursor: pointer;
+    transition:.3s;
+}
+
+.label:hover{
+    color: #2196F3;
+}
+
+.active{
+    outline: 1px solid black;
 }

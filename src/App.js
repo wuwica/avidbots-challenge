@@ -65,26 +65,45 @@ function buildTree(accounts) {
   return tree;
 }
 
+function sortByUsers(unsortedCleaningList){
+  return [].concat(unsortedCleaningList).sort((a, b) => a.account - b.account);
+  
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
+    const headNodes = buildTree(getAccounts());
     this.state = {
-      accountsTree: buildTree(getAccounts())
+      accountsTree: headNodes,
+      cleaningList: sortByUsers(getCleanings()),
+      selectedID: headNodes["0"],
     };
   }
 
   handleNodeClick(i){
-    console.log(i)
+    this.setState({
+      selectedID: i,
+    },function(){
+      console.log(this.state.selectedID)
+    })
   }
+
+
 
   render() {
     return (
             <div className = "card">
               <SideBar
-                      accountsTree={this.state.accountsTree}
-                      onSelect={i => this.handleNodeClick(i)}
+                accountsTree={this.state.accountsTree}
+                onSelect={i => this.handleNodeClick(i)}
+                selectedNode = {this.state.selectedID}
               />
-              <ContentView />
+              <ContentView
+                accountsTree={this.state.accountsTree}
+                selectedNode = {this.state.selectedID}
+                cleaningList={this.state.cleaningList}
+              />
             </div>
             );
 

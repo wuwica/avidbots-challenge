@@ -9,6 +9,7 @@ function RenderCollapsibleRow(props) {
 			name={props.name}
 			id={props.id}
 			onSelect={i => props.onSelect(i)}
+			isActive={props.isActive}
 		>
 			{props.children}
 		</TreeView>
@@ -24,13 +25,15 @@ class SideBar extends React.Component {
 			for (var child in accounts["children"]) {
 				childNodes.push(this.traverse(accounts["children"][child]));
 			}
+			//console.log(this.props.selectedNode)
 			results = (
 				<RenderCollapsibleRow
 					key={accounts.id}
 					name={accounts.name}
 					id={accounts.id}
 					parent={accounts.parent}
-					onSelect={i => this.props.onSelect(i)}
+					onSelect={(i) => this.props.onSelect({...i,children: accounts["children"]})}
+					isActive={accounts.id === this.props.selectedNode.id}
 				>
 					{childNodes}
 				</RenderCollapsibleRow>
