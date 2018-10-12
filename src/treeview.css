@@ -1,0 +1,41 @@
+.row {
+    display: flex;
+    height: 25px;
+    align-items: center;
+}
+
+.tree-view-arrow {
+    background: red;
+    margin: .25em;
+    width: 1em;
+    height: 1em;
+}
+.tree-view-arrow-collapsed {
+    background: blue;
+    margin: .25em;
+    width: 1em;
+    height: 1em;
+}
+.leaf-node{
+    margin: .25em;
+	width:1em;
+	height:1em;
+}
+
+.children{
+	padding-left: .5em;
+    margin-left: .725em;
+    max-height: 300px;
+    transition: .5s;
+    overflow: hidden;
+    border-left: 1px solid black;
+}
+
+.collapsed{
+	transition: .5s;
+    max-height: 0;
+}
+
+.label{
+    cursor: pointer;
+}

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import SideBar from "./sidebar";
-import ContentView from "./contentview";
 
 /**
  * Get the list of accounts
@@ -23,7 +21,7 @@ function getAccounts() {
   ];
 
   return accounts;
-}
+};
 
 /**
  * Get the list of cleanings
@@ -43,51 +41,84 @@ function getCleanings() {
   }
 
   return cleanings;
-}
+};
 
-/**
- *Transforms the list of Accounts into a tree
- */
-function buildTree(accounts) {
-  var tree = [];
+function buildTree(accounts){
+  var tree = [];  
   var list = {};
   accounts.forEach(function(element) {
-    list[element["id"]] = element;
-    element["children"] = [];
+    list[element['id']] = element
+    element['children'] = [];
   });
   accounts.forEach(function(element) {
-    if (element["parent"] != null) {
-      list[element["parent"]]["children"].push(element);
-    } else {
-      tree.push(element);
+    if (element['parent'] != null){
+      list[element['parent']]['children'].push(element);
+    }else{
+      tree.push(element)
     }
   });
   return tree;
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accountsTree: buildTree(getAccounts())
-    };
+function CollapsibleRow(props){
+  const divStyle = {
+    'margin-left': props.depth*15,
+  };
+
+  return(
+    <li>
+      <button className="collapsible-row" style={divStyle} onClick={props.onClick}>
+        {props.value}
+      </button>
+    </li>
+  );  
+}
+
+class SideBar extends React.Component{
+  renderCollapsibleRow(account,depth){
+    return (
+      <CollapsibleRow key={account.id}
+        value={account.name}
+        depth={depth}
+      />
+    );
   }
 
-  handleNodeClick(i){
-    console.log(i)
+  traverse(account,depth){
+    var result = [];
+    if (account){
+      result.push(this.renderCollapsibleRow(account,depth));
+      //console.log(result);
+      for(var child in account["children"]){
+        result.push(this.traverse(account["children"][child],depth+1));
+      }
+    }
+    return result;
+  }
+
+  render(){
+    return (
+      this.traverse(this.props.accounts["0"],0)
+    );
+  }
+}
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      accountsTree: buildTree(getAccounts()),
+    };
   }
 
   render() {
     return (
-            <div className = "card">
-              <SideBar
-                      accountsTree={this.state.accountsTree}
-                      onSelect={i => this.handleNodeClick(i)}
-              />
-              <ContentView />
-            </div>
-            );
-
+      <div>
+        <SideBar
+          accounts = {this.state.accountsTree}
+        />
+      </div>
+    );
   }
 }
 

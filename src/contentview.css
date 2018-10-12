@@ -1,0 +1,9 @@
+.content-area{
+}
+
+.seperator{
+	margin: 25px 25px 25px 0px;
+	padding-left:25px;
+	width:300px;
+	border-left: 1px solid grey;
+}
